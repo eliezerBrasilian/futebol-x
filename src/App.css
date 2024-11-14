@@ -1,0 +1,84 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  color: #000;
+}
+
+footer {
+  margin-top: 40px;
+  width: 100%;
+  text-align: center;
+  padding-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.home-container {
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 70px;
+  padding-left: 20%;
+  padding-right: 20%;
+
+  @media (max-width: 600px) {
+    margin-top: 130px;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+}
+
+.home-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 13px;
+
+  width: 100%;
+
+  .description-card {
+    margin: 30px;
+    padding: 20px;
+    border: 0.5px solid rgba(154, 159, 156, 0.575);
+    border-radius: 10px;
+    width: 100%;
+
+    .text-content {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    footer {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      width: 100%;
+
+      .option {
+        border: solid;
+        border: 1px solid rgba(154, 159, 156, 0.575);
+        border-radius: 10px;
+        width: 90px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+        background-color: white;
+
+        p {
+          cursor: pointer;
+          font-size: 13px;
+          font-weight: 700;
+          text-align: center;
+        }
+      }
+    }
+  }
+}

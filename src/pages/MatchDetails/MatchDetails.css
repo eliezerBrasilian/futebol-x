@@ -1,0 +1,73 @@
+.match-details {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  padding: 30px;
+  padding-top: 90px;
+
+  p,
+  h1,
+  h2,
+  h3 {
+    margin: 0;
+    padding: 0;
+  }
+
+  article {
+    .title {
+      font-size: 20px;
+      font-weight: bolder;
+      margin: 0;
+    }
+    h2 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+}
+
+.match-details .main-section {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .campeonato-logo {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  .details-row {
+    display: flex;
+    gap: 20%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .time-container {
+    .img-container {
+      border: 1px solid black;
+      border-radius: 50%;
+      height: 60px;
+      width: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}

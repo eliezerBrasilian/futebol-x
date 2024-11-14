@@ -1,0 +1,46 @@
+.app-header {
+  top: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+  height: 60px;
+  border-style: solid;
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  font-size: 15px;
+  font-weight: 800;
+
+  border-bottom-width: 0.5px;
+  border-bottom-color: rgba(193, 193, 199, 0.6);
+
+  background-color: white;
+
+  @media (max-width: 600px) {
+    height: max-content;
+    .left {
+      flex-direction: column;
+    }
+  }
+
+  .left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    img {
+      width: 35px;
+      height: 35px;
+    }
+  }
+
+  .right {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+  }
+}
