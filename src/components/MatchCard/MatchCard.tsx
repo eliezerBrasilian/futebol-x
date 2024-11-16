@@ -28,6 +28,12 @@ export function MatchCard(props: MatchCardProps) {
           Jogo cancelado
         </p>
       );
+    } else if (props.data.status == MatchInfoType.TIMED) {
+      setLeftComp(
+        <p style={{ color: "green", fontSize: 11, fontStyle: "italic" }}>
+          Agendado
+        </p>
+      );
     }
   }, [props.data.status]);
 
@@ -49,7 +55,7 @@ export function MatchCard(props: MatchCardProps) {
 
       <div className="match-info">
         <div className="left">
-          {/* <h3>Status</h3> */}
+          <h3>Rodada {props.data.rodada}</h3>
 
           {leftComp}
         </div>

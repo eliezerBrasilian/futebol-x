@@ -11,6 +11,13 @@ export class AppUtils {
     return `${year}-${month}-${day}`;
   }
 
+  static getDayBeforeYesterday(): string {
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 2);
+    return this.formatDate(yesterday);
+  }
+
   static getYesterdayDate(): string {
     const today = new Date();
     const yesterday = new Date(today);
@@ -22,6 +29,13 @@ export class AppUtils {
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
+    return this.formatDate(tomorrow);
+  }
+
+  static getDayAfterTomorrow(): string {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 2);
     return this.formatDate(tomorrow);
   }
 

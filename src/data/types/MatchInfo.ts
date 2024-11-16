@@ -15,6 +15,7 @@ export enum MatchInfoType {
   IN_PLAY = "IN_PLAY",
   FINISHED = "FINISHED",
   CANCELLED = "CANCELLED",
+  TIMED = "TIMED",
 }
 
 export interface Emissora {

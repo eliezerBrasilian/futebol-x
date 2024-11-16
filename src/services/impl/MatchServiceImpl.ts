@@ -55,6 +55,8 @@ export class MatchServiceImpl implements MatchService {
       const response = await axios.get("http://localhost:4000/proxy/matches", {
         params: {
           competitions: "2013,2015,2002,2019,2187,2152,2001,2014,2000,2011",
+          dateFrom: AppUtils.getTodayDate(),
+          dateTo: AppUtils.getTodayDate(),
         },
       });
 
@@ -73,7 +75,7 @@ export class MatchServiceImpl implements MatchService {
       const response = await axios.get("http://localhost:4000/proxy/matches", {
         params: {
           competitions: "2013,2015,2002,2019,2187,2152,2001,2014,2000,2011",
-          dateFrom: AppUtils.getYesterdayDate(),
+          dateFrom: AppUtils.getDayBeforeYesterday(),
           dateTo: AppUtils.getYesterdayDate(),
         },
       });
@@ -111,7 +113,7 @@ export class MatchServiceImpl implements MatchService {
         params: {
           competitions: "2013,2015,2002,2019,2187,2152,2001,2014,2000,2011",
           dateFrom: AppUtils.getTomorrowDate(),
-          dateTo: AppUtils.getTomorrowDate(),
+          dateTo: AppUtils.getDayAfterTomorrow(),
         },
       });
 
