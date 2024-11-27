@@ -37,7 +37,7 @@ export function Home() {
     } else if (optionSelected == 1) {
       return "Alguns jogos de hoje";
     } else if (optionSelected == 2) {
-      return "Alguns jogos de amanhã";
+      return "Alguns jogos que ainda vão acontecer";
     }
 
     return "Exibindo jogos Ao Vivo";
@@ -64,7 +64,7 @@ export function Home() {
                     : "rgba(154, 159, 156, 0.575)",
               }}
             >
-              <p>ONTEM</p>
+              <p>ÚLTIMOS</p>
             </div>
             <div
               onClick={() => optionClicked("1")}
@@ -88,7 +88,7 @@ export function Home() {
                     : "rgba(154, 159, 156, 0.575)",
               }}
             >
-              <p>AMANHÃ</p>
+              <p>PRÓXIMOS</p>
             </div>
             <div
               onClick={() => optionClicked("3")}

@@ -36,7 +36,7 @@ export function MatchList() {
         <h3>
           {containsHoje
             ? "Mostrando todos jogos de hoje"
-            : "Mostrando jogos de amanhã"}
+            : "Mostrando jogos de PRÓXIMOS"}
         </h3>
 
         {matchesList.length == 0 ? (

@@ -11,13 +11,7 @@ export class AppUtils {
     return `${year}-${month}-${day}`;
   }
 
-  static getDayBeforeYesterday(): string {
-    const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(today.getDate() - 2);
-    return this.formatDate(yesterday);
-  }
-
+  // Retorna a data de ontem
   static getYesterdayDate(): string {
     const today = new Date();
     const yesterday = new Date(today);
@@ -32,11 +26,18 @@ export class AppUtils {
     return this.formatDate(tomorrow);
   }
 
-  static getDayAfterTomorrow(): string {
+  static getDayBeforeYesterdayDate(): string {
     const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 2);
-    return this.formatDate(tomorrow);
+    const dayBeforeYesterday = new Date(today);
+    dayBeforeYesterday.setDate(today.getDate() - 2);
+    return this.formatDate(dayBeforeYesterday);
+  }
+
+  static getDayAfterTomorrowDate(): string {
+    const today = new Date();
+    const dayAfterTomorrow = new Date(today);
+    dayAfterTomorrow.setDate(today.getDate() + 2);
+    return this.formatDate(dayAfterTomorrow);
   }
 
   static getTodayDate() {

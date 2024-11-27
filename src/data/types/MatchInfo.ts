@@ -1,4 +1,4 @@
-export interface MatchInfo {
+export type MatchInfo = {
   campeonato: Campeonato;
   rodada: string;
   horario: string;
@@ -6,42 +6,35 @@ export interface MatchInfo {
   time_a: Team;
   time_b: Team;
   emissoras: Emissora[];
-  scores: Score[];
-  status: MatchInfoType;
-}
+  status: MatchInfoStatus;
+  utcDate: string;
+  tempo: Tempo;
+};
 
-export enum MatchInfoType {
+export type Tempo = "1T" | "2T" | null;
+
+export enum MatchInfoStatus {
   SCHEDULED = "SCHEDULED",
   IN_PLAY = "IN_PLAY",
+  LIVE = "LIVE",
   FINISHED = "FINISHED",
   CANCELLED = "CANCELLED",
   TIMED = "TIMED",
 }
 
-export interface Emissora {
+export type Emissora = {
   logo_url: string;
   nome: string;
   isCanalAberto: boolean;
-}
+};
 
-interface Score {
-  time: ScoreTeam;
-  minute: number;
-  player_name: string;
-}
-
-export enum ScoreTeam {
-  TIME_A,
-  TIME_B,
-}
-
-export interface Campeonato {
+export type Campeonato = {
   logo_url: string;
   nome: string;
-}
+};
 
-export interface Team {
+export type Team = {
   logo_url: string;
   nome: string;
   placar: number;
-}
+};

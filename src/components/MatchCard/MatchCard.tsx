@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { MatchInfo, MatchInfoType } from "../../data/types/MatchInfo";
+import { MatchInfo, MatchInfoStatus } from "../../data/types/MatchInfo";
 import { Rotas } from "../../navigation/Rotas";
 import "./MatchCard.css";
 import { useEffect, useState } from "react";
@@ -14,21 +14,22 @@ export function MatchCard(props: MatchCardProps) {
   const [leftComp, setLeftComp] = useState<JSX.Element | null>(null);
 
   useEffect(() => {
-    if (props.data.status == MatchInfoType.FINISHED) {
+    console.log("tempo: " + props.data.tempo);
+    if (props.data.status == MatchInfoStatus.FINISHED) {
       setLeftComp(
         <p style={{ color: "red", fontSize: 11, fontStyle: "italic" }}>
           Já encerrado
         </p>
       );
-    } else if (props.data.status == MatchInfoType.IN_PLAY) {
-      setLeftComp(<p>rodada {props.data.rodada}</p>);
-    } else if (props.data.status == MatchInfoType.CANCELLED) {
+    } else if (props.data.status == MatchInfoStatus.IN_PLAY) {
+      setLeftComp(<p>AO VIVO - {props.data.tempo}</p>);
+    } else if (props.data.status == MatchInfoStatus.CANCELLED) {
       setLeftComp(
         <p style={{ color: "red", fontSize: 11, fontStyle: "italic" }}>
           Jogo cancelado
         </p>
       );
-    } else if (props.data.status == MatchInfoType.TIMED) {
+    } else if (props.data.status == MatchInfoStatus.TIMED) {
       setLeftComp(
         <p style={{ color: "green", fontSize: 11, fontStyle: "italic" }}>
           Agendado
@@ -75,9 +76,9 @@ export function MatchCard(props: MatchCardProps) {
             </div>
 
             <div className="placar">
-              <p>0</p>
+              <p>{props.data.time_a.placar}</p>
               <p>x</p>
-              <p>0</p>
+              <p>{props.data.time_b.placar}</p>
             </div>
 
             <div className="club">

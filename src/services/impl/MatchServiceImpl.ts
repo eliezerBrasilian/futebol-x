@@ -1,9 +1,5 @@
 import axios from "axios";
-import {
-  MatchInfo,
-  MatchInfoType,
-  ScoreTeam,
-} from "../../data/types/MatchInfo";
+import { MatchInfo, MatchInfoStatus } from "../../data/types/MatchInfo";
 import { MatchService } from "../MatchService";
 import { ApiDataToMatchInfoMapper } from "../../data/mapper/ApiDataToMatchInfoMapper";
 import { AppUtils } from "../../data/utils/AppUtils";
@@ -29,13 +25,7 @@ export class MatchServiceImpl implements MatchService {
         nome: "Cruzeiro",
         placar: 0,
       },
-      scores: [
-        {
-          minute: 0,
-          player_name: "",
-          time: ScoreTeam.TIME_A,
-        },
-      ],
+
       dia: "",
       emissoras: [
         {
@@ -46,7 +36,9 @@ export class MatchServiceImpl implements MatchService {
         },
       ],
       rodada: "",
-      status: MatchInfoType.FINISHED,
+      status: MatchInfoStatus.FINISHED,
+      tempo: null,
+      utcDate: "",
     };
   }
 
@@ -55,15 +47,15 @@ export class MatchServiceImpl implements MatchService {
       const response = await axios.get("http://localhost:4000/proxy/matches", {
         params: {
           competitions: "2013,2015,2002,2019,2187,2152,2001,2014,2000,2011",
-          dateFrom: AppUtils.getTodayDate(),
-          dateTo: AppUtils.getTodayDate(),
         },
       });
 
       const matches: any[] = response.data.matches;
       console.log(matches);
 
-      return ApiDataToMatchInfoMapper(matches);
+      const todayMatches = ApiDataToMatchInfoMapper(matches);
+
+      return todayMatches;
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
       return [];
@@ -75,14 +67,16 @@ export class MatchServiceImpl implements MatchService {
       const response = await axios.get("http://localhost:4000/proxy/matches", {
         params: {
           competitions: "2013,2015,2002,2019,2187,2152,2001,2014,2000,2011",
-          dateFrom: AppUtils.getDayBeforeYesterday(),
+          dateFrom: AppUtils.getDayBeforeYesterdayDate(),
           dateTo: AppUtils.getYesterdayDate(),
         },
       });
 
       const matches: any[] = response.data.matches;
 
-      return ApiDataToMatchInfoMapper(matches);
+      const yesterdayMatches = ApiDataToMatchInfoMapper(matches);
+
+      return yesterdayMatches;
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
       return [];
@@ -113,7 +107,7 @@ export class MatchServiceImpl implements MatchService {
         params: {
           competitions: "2013,2015,2002,2019,2187,2152,2001,2014,2000,2011",
           dateFrom: AppUtils.getTomorrowDate(),
-          dateTo: AppUtils.getDayAfterTomorrow(),
+          dateTo: AppUtils.getDayAfterTomorrowDate(),
         },
       });
 
