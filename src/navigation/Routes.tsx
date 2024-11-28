@@ -8,7 +8,7 @@ import { MatchDetails } from "../pages/MatchDetails/MatchDetails";
 import { MatchList } from "../pages/MatchList/MatchList";
 
 export function RoutesApp() {
-  const detailsRoute = Rotas.DETAILS + "/:match_id";
+  const detailsRoute = Rotas.DETAILS + "/:id";
   return (
     <BrowserRouter>
       <ScrollToTop />

@@ -1,48 +1,51 @@
 import { MatchInfo, MatchInfoStatus, Tempo } from "../types/MatchInfo";
 
-export function ApiDataToMatchInfoMapper(matches: any[]) {
-  const formatedMatches: MatchInfo[] = [];
+export class ApiDataToMatchInfoMapper {
+  static getMatchList(matches: any[]) {
+    const formatedMatches: MatchInfo[] = [];
 
-  matches.forEach((value) => {
-    console.log(value.utcDate);
+    matches.forEach((apiMatch) => {
+      return formatedMatches.push(this.getMatch(apiMatch));
+    });
 
-    //
+    return formatedMatches;
+  }
 
-    const matchStart = new Date(value.utcDate).getTime(); // Início do jogo em timestamp
+  static getMatch(apiData: any) {
+    const matchStart = new Date(apiData.utcDate).getTime(); // Início do jogo em timestamp
     const now = Date.now(); // Tempo atual em timestamp
     const elapsedMinutes = Math.floor((now - matchStart) / 60000); // Diferença em minutos
 
     let period: Tempo = null;
-    if (value.status == MatchInfoStatus.IN_PLAY) {
+    if (apiData.status == MatchInfoStatus.IN_PLAY) {
       if (elapsedMinutes < 45) {
         period = "1T";
       } else if (elapsedMinutes > 45 && elapsedMinutes <= 90) period = "2T";
     }
 
-    return formatedMatches.push({
+    return {
+      id: apiData.id,
       campeonato: {
-        logo_url: value.competition.emblem,
-        nome: value.competition.name,
+        logo_url: apiData.competition.emblem,
+        nome: apiData.competition.name,
       },
       dia: "",
       emissoras: [],
       horario: "",
-      rodada: value.matchday,
+      rodada: apiData.matchday,
       time_a: {
-        logo_url: value.homeTeam.crest,
-        nome: value.homeTeam.name,
-        placar: value.score.fullTime.home,
+        logo_url: apiData.homeTeam.crest,
+        nome: apiData.homeTeam.name,
+        placar: apiData.score.fullTime.home,
       },
       time_b: {
-        logo_url: value.awayTeam.crest,
-        nome: value.awayTeam.name,
-        placar: value.score.fullTime.away,
+        logo_url: apiData.awayTeam.crest,
+        nome: apiData.awayTeam.name,
+        placar: apiData.score.fullTime.away,
       },
-      status: value.status,
-      utcDate: value.utcDate,
+      status: apiData.status,
+      utcDate: apiData.utcDate,
       tempo: period,
-    });
-  });
-
-  return formatedMatches;
+    };
+  }
 }

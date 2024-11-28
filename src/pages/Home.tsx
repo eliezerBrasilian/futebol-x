@@ -3,15 +3,18 @@ import { MatchServiceImpl } from "../services/impl/MatchServiceImpl";
 import { MatchCard } from "../components/MatchCard/MatchCard";
 import { useEffect, useMemo, useState } from "react";
 import { MatchInfo } from "../data/types/MatchInfo";
+import ReactLoading from "react-loading";
 
 export function Home() {
   const matchService = new MatchServiceImpl();
   const [optionSelected, setOptionSelected] = useState(3);
   const [matchesList, setMatchesList] = useState<MatchInfo[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadMatches() {
       setMatchesList(await matchService.getLiveMatches());
+      setLoading(false);
     }
 
     loadMatches();
@@ -106,7 +109,16 @@ export function Home() {
         </article>
 
         <h3>{titleOver}</h3>
-        {matchesList.length == 0 ? (
+        {loading ? (
+          <div>
+            <ReactLoading
+              type={"balls"}
+              color={"green"}
+              height={667}
+              width={105}
+            />
+          </div>
+        ) : matchesList.length == 0 ? (
           <div>
             <h4>Não há nenhum jogo :(</h4>
           </div>

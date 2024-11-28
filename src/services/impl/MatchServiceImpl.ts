@@ -1,45 +1,27 @@
 import axios from "axios";
-import { MatchInfo, MatchInfoStatus } from "../../data/types/MatchInfo";
+import { MatchInfo } from "../../data/types/MatchInfo";
 import { MatchService } from "../MatchService";
 import { ApiDataToMatchInfoMapper } from "../../data/mapper/ApiDataToMatchInfoMapper";
 import { AppUtils } from "../../data/utils/AppUtils";
 
 export class MatchServiceImpl implements MatchService {
-  findMatchInfoById(id: string): MatchInfo {
-    return {
-      campeonato: {
-        logo_url:
-          "https://logodownload.org/wp-content/uploads/2018/10/campeonato-brasileiro-logo-brasileirao-logo.png",
-        nome: "Campeonato Brasileiro",
-      },
-      horario: "08:00",
-      time_a: {
-        logo_url:
-          "https://logodownload.org/wp-content/uploads/2016/10/atletico-mineiro-logo-0.png",
-        nome: "Atletico MG",
-        placar: 0,
-      },
-      time_b: {
-        logo_url:
-          "https://logodetimes.com/times/cruzeiro/logo-cruzeiro-4096.png",
-        nome: "Cruzeiro",
-        placar: 0,
-      },
+  async findMatchById(id: string): Promise<MatchInfo | undefined> {
+    try {
+      const response = await axios.get(
+        "http://localhost:4000/proxy/matches/" + id
+      );
 
-      dia: "",
-      emissoras: [
-        {
-          nome: "Globo",
-          logo_url:
-            "https://logodownload.org/wp-content/uploads/2013/12/rede-globo-logo-0.png",
-          isCanalAberto: true,
-        },
-      ],
-      rodada: "",
-      status: MatchInfoStatus.FINISHED,
-      tempo: null,
-      utcDate: "",
-    };
+      const matche: any = response.data;
+      console.log("matche------");
+      console.log(matche);
+
+      const todayMatches = ApiDataToMatchInfoMapper.getMatch(matche);
+
+      return todayMatches;
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error);
+      return undefined;
+    }
   }
 
   async getTodayMatches(): Promise<MatchInfo[]> {
@@ -53,7 +35,7 @@ export class MatchServiceImpl implements MatchService {
       const matches: any[] = response.data.matches;
       console.log(matches);
 
-      const todayMatches = ApiDataToMatchInfoMapper(matches);
+      const todayMatches = ApiDataToMatchInfoMapper.getMatchList(matches);
 
       return todayMatches;
     } catch (error) {
@@ -74,7 +56,7 @@ export class MatchServiceImpl implements MatchService {
 
       const matches: any[] = response.data.matches;
 
-      const yesterdayMatches = ApiDataToMatchInfoMapper(matches);
+      const yesterdayMatches = ApiDataToMatchInfoMapper.getMatchList(matches);
 
       return yesterdayMatches;
     } catch (error) {
@@ -94,7 +76,7 @@ export class MatchServiceImpl implements MatchService {
 
       const matches: any[] = response.data.matches;
 
-      return ApiDataToMatchInfoMapper(matches);
+      return ApiDataToMatchInfoMapper.getMatchList(matches);
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
       return [];
@@ -113,7 +95,7 @@ export class MatchServiceImpl implements MatchService {
 
       const matches: any[] = response.data.matches;
 
-      return ApiDataToMatchInfoMapper(matches);
+      return ApiDataToMatchInfoMapper.getMatchList(matches);
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
       return [];

@@ -1,4 +1,5 @@
 export type MatchInfo = {
+  id: string;
   campeonato: Campeonato;
   rodada: string;
   horario: string;

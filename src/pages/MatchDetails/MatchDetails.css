@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: 35px;
   padding: 30px;
-  padding-top: 90px;
+  padding-top: 150px;
 
   p,
   h1,
@@ -43,12 +43,18 @@
 
   .details-row {
     display: flex;
-    gap: 20%;
+    gap: 10%;
     align-items: center;
     justify-content: center;
   }
 
   .time-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
     .img-container {
       border: 1px solid black;
       border-radius: 50%;

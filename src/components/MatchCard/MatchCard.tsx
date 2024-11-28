@@ -42,7 +42,7 @@ export function MatchCard(props: MatchCardProps) {
     <article
       className="match-card"
       onClick={function () {
-        nav(Rotas.DETAILS + "/id");
+        nav(`${Rotas.DETAILS}/${props.data.id}`);
       }}
     >
       <header>

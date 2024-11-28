@@ -36,7 +36,7 @@ export function Header() {
 
         <NavLink to={Rotas.TOMORROW}>
           <CustomNav
-            titulo={"Jogos "}
+            titulo={"Jogos de amanhã+"}
             isActive={currentNav == Rotas.TOMORROW}
           />
         </NavLink>
