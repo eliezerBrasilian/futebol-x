@@ -1,19 +1,23 @@
 import "../App.css";
-import { MatchServiceImpl } from "../services/impl/MatchServiceImpl";
+//import { MatchServiceImpl } from "../services/impl/MatchServiceImpl";
 import { MatchCard } from "../components/MatchCard/MatchCard";
 import { useEffect, useMemo, useState } from "react";
 import { MatchInfo } from "../data/types/MatchInfo";
 import ReactLoading from "react-loading";
+import { MockData } from "../data/mock/MockData";
 
 export function Home() {
-  const matchService = new MatchServiceImpl();
+  // const matchService = new MatchServiceImpl();
   const [optionSelected, setOptionSelected] = useState(3);
   const [matchesList, setMatchesList] = useState<MatchInfo[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const mock = new MockData();
+
   useEffect(() => {
     async function loadMatches() {
-      setMatchesList(await matchService.getLiveMatches());
+      //setMatchesList(await matchService.getLiveMatches());
+      setMatchesList(mock.findLiveMatches());
       setLoading(false);
     }
 
@@ -24,13 +28,17 @@ export function Home() {
     setOptionSelected(Number(id));
     setMatchesList([]);
     if (id == "0") {
-      setMatchesList(await matchService.getYesterdayMatches());
+      //setMatchesList(await matchService.getYesterdayMatches());
+      setMatchesList(mock.getYesterdayMatches());
     } else if (id == "1") {
-      setMatchesList(await matchService.getTodayMatches());
+      // setMatchesList(await matchService.getTodayMatches());
+      setMatchesList(mock.getTodayMatches());
     } else if (id == "2") {
-      setMatchesList(await matchService.getTomorrowMatches());
+      //setMatchesList(await matchService.getTomorrowMatches());
+      setMatchesList(mock.getTomorrowMatches());
     } else if (id == "3") {
-      setMatchesList(await matchService.getLiveMatches());
+      // setMatchesList(await matchService.getLiveMatches());
+      setMatchesList(mock.findLiveMatches());
     }
   };
 

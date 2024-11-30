@@ -7,9 +7,10 @@ export type MatchInfo = {
   time_a: Team;
   time_b: Team;
   emissoras: Emissora[];
-  status: MatchInfoStatus;
+  status: MatchInfoStatus | string;
   utcDate: string;
   tempo: Tempo;
+  estadio: string;
 };
 
 export type Tempo = "1T" | "2T" | null;
@@ -32,10 +33,12 @@ export type Emissora = {
 export type Campeonato = {
   logo_url: string;
   nome: string;
+  id: string;
 };
 
 export type Team = {
   logo_url: string;
   nome: string;
-  placar: number;
+  placar: string;
+  id: string;
 };

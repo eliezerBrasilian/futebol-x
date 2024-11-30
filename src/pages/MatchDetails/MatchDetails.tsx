@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
-import { MatchServiceImpl } from "../../services/impl/MatchServiceImpl";
+//import { ApiFutebolDataImpl as MatchServiceImpl } from "../../services/impl/ApiFutebolDataImpl";
 import { MatchInfo } from "../../data/types/MatchInfo";
 import "./MatchDetails.css";
 import { useParams } from "react-router-dom";
 import ReactLoading from "react-loading";
+import { MockData } from "../../data/mock/MockData";
 
 enum MatchStatus {
   IDLE,
 }
 
 export function MatchDetails() {
-  const matchService = new MatchServiceImpl();
+  // const matchService = new MatchServiceImpl();
+  const mock = new MockData();
 
   const { id } = useParams();
 
@@ -23,7 +25,8 @@ export function MatchDetails() {
   useEffect(() => {
     async function findMatchById() {
       if (id != undefined)
-        setMatchDetails(await matchService.findMatchById(id));
+        //setMatchDetails(await matchService.findMatchById(id));
+        setMatchDetails(mock.findOneMatch());
       else setMatchDetails(undefined);
     }
     findMatchById();
@@ -98,10 +101,6 @@ export function MatchDetails() {
                 <h1>{matchDetails.time_a.placar}</h1>
               </div>
             </div>
-            <div>
-              <h1>{matchDetails?.horario}</h1>
-              <h2>{matchDetails?.dia}</h2>
-            </div>
 
             <h1>X</h1>
 
@@ -138,8 +137,7 @@ export function MatchDetails() {
             Saiba agora onde assistir o jogo de futebol Ao vivo entre{" "}
             {matchDetails?.time_a.nome} X{matchDetails?.time_b.nome} pelo{" "}
             {matchDetails?.campeonato.nome}, o jogo será às{" "}
-            {matchDetails?.horario.toString()}, do dia
-            {matchDetails?.dia}.
+            {matchDetails?.horario.toString()}, do dia {matchDetails?.dia}.
           </p>
         </section>
       </div>

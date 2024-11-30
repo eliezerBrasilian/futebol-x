@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { MatchInfo } from "../../data/types/MatchInfo";
-import { MatchServiceImpl } from "../../services/impl/MatchServiceImpl";
+//import { ApiFutebolDataImpl } from "../../services/impl/ApiFutebolDataImpl";
 import { MatchCard } from "../../components/MatchCard/MatchCard";
 import { useLocation } from "react-router-dom";
+import { MockData } from "../../data/mock/MockData";
 
 export function MatchList() {
-  const matchService = new MatchServiceImpl();
+  // const matchService = new MatchServiceImpl();
+  const mock = new MockData();
 
   const [matchesList, setMatchesList] = useState<MatchInfo[]>([]);
 
@@ -21,9 +23,11 @@ export function MatchList() {
 
     async function loadMatches() {
       if (currentRouteName?.includes("hoje"))
-        setMatchesList(await matchService.getTodayMatches());
+        // setMatchesList(await matchService.getTodayMatches());
+        setMatchesList(mock.getTodayMatches());
       else {
-        setMatchesList(await matchService.getTomorrowMatches());
+        //setMatchesList(await matchService.getTomorrowMatches());
+        setMatchesList(mock.getTomorrowMatches());
       }
     }
 
