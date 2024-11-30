@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import { MatchInfo } from "../../data/types/MatchInfo";
-//import { ApiFutebolDataImpl } from "../../services/impl/ApiFutebolDataImpl";
+import { ApiFutebolDataImpl as MatchServiceImpl } from "../../services/impl/ApiFutebolDataImpl";
 import { MatchCard } from "../../components/MatchCard/MatchCard";
 import { useLocation } from "react-router-dom";
-import { MockData } from "../../data/mock/MockData";
+import ReactLoading from "react-loading";
 
 export function MatchList() {
-  // const matchService = new MatchServiceImpl();
-  const mock = new MockData();
+  const matchService = new MatchServiceImpl();
 
   const [matchesList, setMatchesList] = useState<MatchInfo[]>([]);
 
   const location = useLocation();
 
   const [containsHoje, setContainsHoje] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const currentRouteName = location.pathname.split("/").pop();
@@ -22,12 +22,12 @@ export function MatchList() {
     else setContainsHoje(false);
 
     async function loadMatches() {
-      if (currentRouteName?.includes("hoje"))
-        // setMatchesList(await matchService.getTodayMatches());
-        setMatchesList(mock.getTodayMatches());
-      else {
-        //setMatchesList(await matchService.getTomorrowMatches());
-        setMatchesList(mock.getTomorrowMatches());
+      if (currentRouteName?.includes("hoje")) {
+        setMatchesList(await matchService.getTodayMatches());
+        setLoading(false);
+      } else {
+        setMatchesList(await matchService.getTomorrowMatches());
+        setLoading(false);
       }
     }
 
@@ -43,7 +43,16 @@ export function MatchList() {
             : "Mostrando próximos jogos"}
         </h3>
 
-        {matchesList.length == 0 ? (
+        {loading ? (
+          <div>
+            <ReactLoading
+              type={"balls"}
+              color={"green"}
+              height={667}
+              width={105}
+            />
+          </div>
+        ) : matchesList.length == 0 ? (
           <div>
             <h4>Não há nenhum jogo :(</h4>
           </div>

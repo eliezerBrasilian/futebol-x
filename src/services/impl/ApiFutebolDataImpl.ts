@@ -4,8 +4,78 @@ import { MatchService } from "../MatchService";
 import { ApiDataMapper } from "../../data/mapper/ApiDataMapper";
 import { Partida } from "../../data/types/Partida";
 import { RetornoPartidasApi } from "../../data/types/RetornoPartidasApi";
+import { MockData } from "../../data/mock/MockData";
 
 export class ApiFutebolDataImpl implements MatchService {
+  private mock: MockData = new MockData();
+
+  async getNextMatches(): Promise<MatchInfo[]> {
+    try {
+      const allMatches = await this.getPartidas();
+
+      // Calcula o dia após amanhã
+      const dayAfterTomorrow = new Date();
+      dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
+
+      // Armazena as datas dos próximos 5 dias (a partir do dia após amanhã)
+      const nextFiveDays: string[] = [];
+      for (let i = 0; i < 5; i++) {
+        const date = new Date(dayAfterTomorrow);
+        date.setDate(dayAfterTomorrow.getDate() + i);
+        nextFiveDays.push(date.toLocaleDateString("pt-BR")); // Formato dd/mm/yyyy
+      }
+
+      console.log("------Próximos 5 dias------");
+      console.log(nextFiveDays);
+
+      // Filtra as partidas cuja data_realizacao está nos próximos 5 dias
+      const nextMatches = allMatches.filter((match) =>
+        nextFiveDays.includes(match.dia)
+      );
+
+      console.log(nextMatches);
+
+      return nextMatches;
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error);
+      return [];
+    }
+  }
+
+  async getLastMatches(): Promise<MatchInfo[]> {
+    try {
+      const allMatches = await this.getPartidas();
+
+      // Obtém a data de ontem
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+
+      // Armazena as datas dos últimos 5 dias (incluindo ontem)
+      const lastFiveDays: string[] = [];
+      for (let i = 0; i < 5; i++) {
+        const date = new Date(yesterday);
+        date.setDate(yesterday.getDate() - i);
+        lastFiveDays.push(date.toLocaleDateString("pt-BR")); // Formato dd/mm/yyyy
+      }
+
+      console.log("------Últimos 5 dias------");
+      console.log(lastFiveDays);
+
+      // Filtra as partidas cuja data_realizacao está nos últimos 5 dias
+      const lastMatches = allMatches.filter((match) =>
+        lastFiveDays.includes(match.dia)
+      );
+
+      console.log(lastMatches);
+
+      return lastMatches;
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error);
+      return [];
+    }
+    return this.mock.getYesterdayMatches();
+  }
+
   private idBrasileiraoA = 10;
 
   async findMatchById(id: string): Promise<MatchInfo | undefined> {
@@ -26,6 +96,7 @@ export class ApiFutebolDataImpl implements MatchService {
   }
 
   async getPartidas(): Promise<MatchInfo[]> {
+    return this.mock.getYesterdayMatches();
     const allMatches: { rodada: string; partida: Partida }[] = [];
     try {
       const response = await axios.get(
@@ -41,10 +112,15 @@ export class ApiFutebolDataImpl implements MatchService {
       */
 
       for (const fase of Object.values(partidaJson.partidas)) {
+        console.log("fase: ");
+        console.log(fase);
         // Itera pelas rodadas dentro de cada fase
         for (const [rodada, partidas] of Object.entries(fase)) {
           // Adiciona as partidas com a chave 'rodada'
           partidas.forEach((partida) => {
+            console.log("partidas: ");
+            console.log(partida);
+
             allMatches.push({ rodada, partida });
           });
         }
@@ -62,6 +138,7 @@ export class ApiFutebolDataImpl implements MatchService {
   }
 
   async getTodayMatches(): Promise<MatchInfo[]> {
+    return this.mock.getYesterdayMatches();
     try {
       const allMatches = await this.getPartidas();
 
@@ -89,6 +166,7 @@ export class ApiFutebolDataImpl implements MatchService {
   }
 
   async getYesterdayMatches(): Promise<MatchInfo[]> {
+    return this.mock.getYesterdayMatches();
     try {
       const allMatches = await this.getPartidas();
 
@@ -115,6 +193,7 @@ export class ApiFutebolDataImpl implements MatchService {
   }
 
   async getLiveMatches(): Promise<MatchInfo[]> {
+    return this.mock.getYesterdayMatches();
     try {
       const response = await axios.get(`http://localhost:4000/futebol/ao-vivo`);
 
@@ -128,6 +207,7 @@ export class ApiFutebolDataImpl implements MatchService {
   }
 
   async getTomorrowMatches(): Promise<MatchInfo[]> {
+    return this.mock.getYesterdayMatches();
     try {
       const allMatches = await this.getPartidas();
 

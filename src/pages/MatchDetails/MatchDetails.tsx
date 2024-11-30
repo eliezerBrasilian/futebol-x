@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
-//import { ApiFutebolDataImpl as MatchServiceImpl } from "../../services/impl/ApiFutebolDataImpl";
+import { ApiFutebolDataImpl as MatchServiceImpl } from "../../services/impl/ApiFutebolDataImpl";
 import { MatchInfo } from "../../data/types/MatchInfo";
 import "./MatchDetails.css";
 import { useParams } from "react-router-dom";
 import ReactLoading from "react-loading";
-import { MockData } from "../../data/mock/MockData";
+//import { MockData } from "../../data/mock/MockData";
 
 enum MatchStatus {
   IDLE,
 }
 
 export function MatchDetails() {
-  // const matchService = new MatchServiceImpl();
-  const mock = new MockData();
+  const matchService = new MatchServiceImpl();
+  //const mock = new MockData();
 
   const { id } = useParams();
 
@@ -25,8 +25,8 @@ export function MatchDetails() {
   useEffect(() => {
     async function findMatchById() {
       if (id != undefined)
-        //setMatchDetails(await matchService.findMatchById(id));
-        setMatchDetails(mock.findOneMatch());
+        setMatchDetails(await matchService.findMatchById(id));
+      //setMatchDetails(mock.findOneMatch());
       else setMatchDetails(undefined);
     }
     findMatchById();

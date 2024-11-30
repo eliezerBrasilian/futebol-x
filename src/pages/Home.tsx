@@ -1,54 +1,57 @@
 import "../App.css";
-//import { MatchServiceImpl } from "../services/impl/MatchServiceImpl";
+
 import { MatchCard } from "../components/MatchCard/MatchCard";
-import { useEffect, useMemo, useState } from "react";
-import { MatchInfo } from "../data/types/MatchInfo";
+import { useMemo, useState } from "react";
+
 import ReactLoading from "react-loading";
-import { MockData } from "../data/mock/MockData";
+
+import { useLoadMatchesHook } from "../data/hooks/LoadMatchesHook";
+import { useApiContext } from "../context/ApiContext";
 
 export function Home() {
-  // const matchService = new MatchServiceImpl();
   const [optionSelected, setOptionSelected] = useState(3);
-  const [matchesList, setMatchesList] = useState<MatchInfo[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { matchesList, setMatchesList, loading, setLoading } =
+    useLoadMatchesHook();
 
-  const mock = new MockData();
-
-  useEffect(() => {
-    async function loadMatches() {
-      //setMatchesList(await matchService.getLiveMatches());
-      setMatchesList(mock.findLiveMatches());
-      setLoading(false);
-    }
-
-    loadMatches();
-  }, []);
+  const {
+    liveMatchesList,
+    lastMatchesList,
+    todayMatchesList,
+    tomorrowMatchesList,
+  } = useApiContext();
 
   const optionClicked = async (id: string) => {
     setOptionSelected(Number(id));
-    setMatchesList([]);
+    setLoading(true);
+
     if (id == "0") {
-      //setMatchesList(await matchService.getYesterdayMatches());
-      setMatchesList(mock.getYesterdayMatches());
+      setMatchesList(lastMatchesList);
+      //setMatchesList(await matchService.getLastMatches());
+      // setMatchesList(mock.getYesterdayMatches());
     } else if (id == "1") {
-      // setMatchesList(await matchService.getTodayMatches());
-      setMatchesList(mock.getTodayMatches());
+      setMatchesList(todayMatchesList);
+      //setMatchesList(await matchService.getTodayMatches());
+      // setMatchesList(mock.getTodayMatches());
     } else if (id == "2") {
+      setMatchesList(tomorrowMatchesList);
       //setMatchesList(await matchService.getTomorrowMatches());
-      setMatchesList(mock.getTomorrowMatches());
+      //setMatchesList(mock.getTomorrowMatches());
     } else if (id == "3") {
+      setMatchesList(liveMatchesList);
       // setMatchesList(await matchService.getLiveMatches());
-      setMatchesList(mock.findLiveMatches());
+      //setMatchesList(mock.findLiveMatches());
     }
+
+    setLoading(false);
   };
 
   const titleOver = useMemo(() => {
     if (optionSelected == 0) {
-      return "Alguns jogos de ontem";
+      return "ùltimos jogos que aconteceram";
     } else if (optionSelected == 1) {
-      return "Alguns jogos de hoje";
+      return "Jogos de hoje";
     } else if (optionSelected == 2) {
-      return "Alguns jogos que ainda vão acontecer";
+      return "Jogos que ainda vão acontecer";
     }
 
     return "Exibindo jogos Ao Vivo";

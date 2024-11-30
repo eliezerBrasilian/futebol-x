@@ -34,30 +34,32 @@ export class ApiDataMapper {
 
     if (rodada != undefined) {
       // Extrai o número da rodada
-      rodadaNumero = rodada.match(/\d+/)?.[0] ?? "0"; // Captura o número ou retorna "0" como fallback
+      rodadaNumero = rodada?.match(/\d+/)?.[0] ?? "0"; // Captura o número ou retorna "0" como fallback
     }
+
+    console.log(partida);
 
     return {
       id: String(partida?.partida_id),
       campeonato: {
         nome: partida.campeonato?.nome,
         logo_url: partida.campeonato?.slug,
-        id: partida.campeonato?.campeonato_id.toString(),
+        id: partida.campeonato?.campeonato_id?.toString(),
       },
-      rodada: rodadaNumero.toString(),
+      rodada: rodadaNumero?.toString(),
       horario: partida.hora_realizacao,
       dia: partida.data_realizacao,
       time_a: {
         logo_url: partida.time_mandante.escudo,
         nome: partida.time_mandante.nome_popular,
-        placar: partida.placar_mandante.toString(),
-        id: partida.time_mandante.time_id.toString(),
+        placar: partida?.placar_mandante?.toString(),
+        id: partida?.time_mandante.time_id?.toString(),
       },
       time_b: {
         logo_url: partida.time_visitante.escudo,
         nome: partida.time_visitante.nome_popular,
-        placar: partida.placar_visitante.toString(),
-        id: partida.time_visitante.time_id.toString(),
+        placar: partida?.placar_visitante?.toString(),
+        id: partida?.time_visitante.time_id?.toString(),
       },
       emissoras: [],
       status: partida.status,

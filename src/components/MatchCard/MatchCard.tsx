@@ -3,6 +3,8 @@ import { MatchInfo, MatchInfoStatus } from "../../data/types/MatchInfo";
 import { Rotas } from "../../navigation/Rotas";
 import "./MatchCard.css";
 import { useEffect, useState } from "react";
+import { Button } from "@mui/material";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 interface MatchCardProps {
   data: MatchInfo;
@@ -38,7 +40,10 @@ export function MatchCard(props: MatchCardProps) {
           Jogo cancelado
         </p>
       );
-    } else if (props.data.status == MatchInfoStatus.TIMED) {
+    } else if (
+      props.data.status == MatchInfoStatus.TIMED ||
+      props.data.status == "agendado"
+    ) {
       setLeftComp(
         <p style={{ color: "green", fontSize: 11, fontStyle: "italic" }}>
           Agendado
@@ -94,7 +99,7 @@ export function MatchCard(props: MatchCardProps) {
               <img
                 className="profile-image"
                 src={props.data.time_b.logo_url}
-                alt="time a"
+                alt="time b"
                 style={{ width: 30, height: 30 }}
               />
               <p>{props.data.time_b.nome}</p>
@@ -102,11 +107,9 @@ export function MatchCard(props: MatchCardProps) {
           </div>
 
           <footer>
-            {props.data.emissoras.map((value, index) => (
-              <div className="emissora" key={index}>
-                <p>{value.nome}</p>
-              </div>
-            ))}
+            <Button variant="contained" endIcon={<ArrowForwardIosIcon />}>
+              Detalhes da Partida
+            </Button>
           </footer>
         </div>
       </div>

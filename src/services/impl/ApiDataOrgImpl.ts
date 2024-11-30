@@ -2,6 +2,13 @@ import { MatchInfo } from "../../data/types/MatchInfo";
 import { MatchService } from "../MatchService";
 
 export class ApiDataOrgImpl implements MatchService {
+  getNextMatches(): Promise<MatchInfo[]> {
+    throw new Error("Method not implemented.");
+  }
+  getLastMatches(): Promise<MatchInfo[]> {
+    throw new Error("Method not implemented.");
+  }
+
   async getYesterdayMatches(): Promise<MatchInfo[]> {
     throw new Error("Method not implemented.");
   }
