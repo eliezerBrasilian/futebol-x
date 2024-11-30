@@ -80,7 +80,7 @@ export class ApiFutebolDataImpl implements MatchService {
   async findMatchById(id: string): Promise<MatchInfo | undefined> {
     try {
       const response = await axios.get(
-        `https://futebol-x-server.onrender.com:4000/futebol/partidas/${id}`
+        `https://futebol-x-server.onrender.com/futebol/partidas/${id}`
       );
 
       const partida: any = response.data;
@@ -98,7 +98,7 @@ export class ApiFutebolDataImpl implements MatchService {
     const allMatches: { rodada: string; partida: Partida }[] = [];
     try {
       const response = await axios.get(
-        `https://futebol-x-server.onrender.com:4000/futebol/campeonatos/${this.idBrasileiraoA}/partidas/`
+        `https://futebol-x-server.onrender.com/futebol/campeonatos/${this.idBrasileiraoA}/partidas/`
       );
 
       const partidaJson: RetornoPartidasApi = response.data;
@@ -191,7 +191,7 @@ export class ApiFutebolDataImpl implements MatchService {
   async getLiveMatches(): Promise<MatchInfo[]> {
     try {
       const response = await axios.get(
-        `https://futebol-x-server.onrender.com:4000/futebol/ao-vivo`
+        `https://futebol-x-server.onrender.com/futebol/ao-vivo`
       );
 
       const partidas: Partida[] = response.data;
