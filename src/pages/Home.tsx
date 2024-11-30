@@ -1,48 +1,38 @@
 import "../App.css";
-
+import { ApiFutebolDataImpl as MatchServiceImpl } from "../services/impl/ApiFutebolDataImpl";
 import { MatchCard } from "../components/MatchCard/MatchCard";
-import { useMemo, useState } from "react";
-
+import { useEffect, useMemo, useState } from "react";
+import { MatchInfo } from "../data/types/MatchInfo";
 import ReactLoading from "react-loading";
 
-import { useLoadMatchesHook } from "../data/hooks/LoadMatchesHook";
-import { useApiContext } from "../context/ApiContext";
-
 export function Home() {
+  const matchService = new MatchServiceImpl();
   const [optionSelected, setOptionSelected] = useState(3);
-  const { matchesList, setMatchesList, loading, setLoading } =
-    useLoadMatchesHook();
+  const [matchesList, setMatchesList] = useState<MatchInfo[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const {
-    liveMatchesList,
-    lastMatchesList,
-    todayMatchesList,
-    tomorrowMatchesList,
-  } = useApiContext();
+  useEffect(() => {
+    async function loadMatches() {
+      setMatchesList(await matchService.getLiveMatches());
+
+      setLoading(false);
+    }
+
+    loadMatches();
+  }, []);
 
   const optionClicked = async (id: string) => {
     setOptionSelected(Number(id));
-    setLoading(true);
-
+    setMatchesList([]);
     if (id == "0") {
-      setMatchesList(lastMatchesList);
-      //setMatchesList(await matchService.getLastMatches());
-      // setMatchesList(mock.getYesterdayMatches());
+      setMatchesList(await matchService.getLastMatches());
     } else if (id == "1") {
-      setMatchesList(todayMatchesList);
-      //setMatchesList(await matchService.getTodayMatches());
-      // setMatchesList(mock.getTodayMatches());
+      setMatchesList(await matchService.getTodayMatches());
     } else if (id == "2") {
-      setMatchesList(tomorrowMatchesList);
-      //setMatchesList(await matchService.getTomorrowMatches());
-      //setMatchesList(mock.getTomorrowMatches());
+      setMatchesList(await matchService.getTomorrowMatches());
     } else if (id == "3") {
-      setMatchesList(liveMatchesList);
-      // setMatchesList(await matchService.getLiveMatches());
-      //setMatchesList(mock.findLiveMatches());
+      setMatchesList(await matchService.getLiveMatches());
     }
-
-    setLoading(false);
   };
 
   const titleOver = useMemo(() => {

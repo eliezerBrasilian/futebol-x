@@ -8,6 +8,7 @@ import { MockData } from "../../data/mock/MockData";
 
 export class ApiFutebolDataImpl implements MatchService {
   private mock: MockData = new MockData();
+  private idBrasileiraoA = 10;
 
   async getNextMatches(): Promise<MatchInfo[]> {
     try {
@@ -76,12 +77,10 @@ export class ApiFutebolDataImpl implements MatchService {
     return this.mock.getYesterdayMatches();
   }
 
-  private idBrasileiraoA = 10;
-
   async findMatchById(id: string): Promise<MatchInfo | undefined> {
     try {
       const response = await axios.get(
-        `http://localhost:4000/futebol/partidas/${id}`
+        `https://futebol-x-server.onrender.com:4000/futebol/partidas/${id}`
       );
 
       const partida: any = response.data;
@@ -96,11 +95,10 @@ export class ApiFutebolDataImpl implements MatchService {
   }
 
   async getPartidas(): Promise<MatchInfo[]> {
-    return this.mock.getYesterdayMatches();
     const allMatches: { rodada: string; partida: Partida }[] = [];
     try {
       const response = await axios.get(
-        `http://localhost:4000/futebol/campeonatos/${this.idBrasileiraoA}/partidas/`
+        `https://futebol-x-server.onrender.com:4000/futebol/campeonatos/${this.idBrasileiraoA}/partidas/`
       );
 
       const partidaJson: RetornoPartidasApi = response.data;
@@ -138,7 +136,6 @@ export class ApiFutebolDataImpl implements MatchService {
   }
 
   async getTodayMatches(): Promise<MatchInfo[]> {
-    return this.mock.getYesterdayMatches();
     try {
       const allMatches = await this.getPartidas();
 
@@ -166,7 +163,6 @@ export class ApiFutebolDataImpl implements MatchService {
   }
 
   async getYesterdayMatches(): Promise<MatchInfo[]> {
-    return this.mock.getYesterdayMatches();
     try {
       const allMatches = await this.getPartidas();
 
@@ -193,9 +189,10 @@ export class ApiFutebolDataImpl implements MatchService {
   }
 
   async getLiveMatches(): Promise<MatchInfo[]> {
-    return this.mock.getYesterdayMatches();
     try {
-      const response = await axios.get(`http://localhost:4000/futebol/ao-vivo`);
+      const response = await axios.get(
+        `https://futebol-x-server.onrender.com:4000/futebol/ao-vivo`
+      );
 
       const partidas: Partida[] = response.data;
 
@@ -207,7 +204,6 @@ export class ApiFutebolDataImpl implements MatchService {
   }
 
   async getTomorrowMatches(): Promise<MatchInfo[]> {
-    return this.mock.getYesterdayMatches();
     try {
       const allMatches = await this.getPartidas();
 
