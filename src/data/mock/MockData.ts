@@ -28,9 +28,10 @@ export class MockData {
         id: "2",
       },
       emissoras: [],
-      status: "finalizado",
+      status: "agendado",
       tempo: null,
       utcDate: new Date().getUTCDate().toString(),
+      estadio: "",
     };
   }
 
@@ -65,6 +66,7 @@ export class MockData {
         status: "finalizado",
         tempo: null,
         utcDate: new Date().getUTCDate().toString(),
+        estadio: "",
       },
     ];
   }
@@ -100,6 +102,7 @@ export class MockData {
         status: "finalizado",
         tempo: null,
         utcDate: new Date().getUTCDate().toString(),
+        estadio: "",
       },
     ];
   }
@@ -135,6 +138,7 @@ export class MockData {
         status: "finalizado",
         tempo: null,
         utcDate: new Date().getUTCDate().toString(),
+        estadio: "",
       },
     ];
   }
@@ -167,9 +171,10 @@ export class MockData {
           id: "2",
         },
         emissoras: [],
-        status: "finalizado",
+        status: "andamento",
         tempo: null,
         utcDate: new Date().getUTCDate().toString(),
+        estadio: "",
       },
     ];
   }

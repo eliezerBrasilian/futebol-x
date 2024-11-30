@@ -15,15 +15,24 @@ export function MatchCard(props: MatchCardProps) {
 
   useEffect(() => {
     console.log("tempo: " + props.data.tempo);
-    if (props.data.status == MatchInfoStatus.FINISHED) {
+    if (
+      props.data.status == MatchInfoStatus.FINISHED ||
+      props.data.status == "finalizado"
+    ) {
       setLeftComp(
         <p style={{ color: "red", fontSize: 11, fontStyle: "italic" }}>
           Já encerrado
         </p>
       );
-    } else if (props.data.status == MatchInfoStatus.IN_PLAY) {
+    } else if (
+      props.data.status == MatchInfoStatus.IN_PLAY ||
+      props.data.status == "andamento"
+    ) {
       setLeftComp(<p>AO VIVO - {props.data.tempo}</p>);
-    } else if (props.data.status == MatchInfoStatus.CANCELLED) {
+    } else if (
+      props.data.status == MatchInfoStatus.CANCELLED ||
+      props.data.status == "cancelado"
+    ) {
       setLeftComp(
         <p style={{ color: "red", fontSize: 11, fontStyle: "italic" }}>
           Jogo cancelado

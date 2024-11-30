@@ -18,7 +18,7 @@ export class ApiFutebolDataImpl implements MatchService {
       console.log("matche------");
       console.log(partida);
 
-      return ApiDataMapper.getPartidaToMatchInfo(partida);
+      return ApiDataMapper.getPartidaToMatchInfo(partida, undefined);
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
       return undefined;
@@ -115,7 +115,16 @@ export class ApiFutebolDataImpl implements MatchService {
   }
 
   async getLiveMatches(): Promise<MatchInfo[]> {
-    throw new Error("Method not implemented.");
+    try {
+      const response = await axios.get(`http://localhost:4000/futebol/ao-vivo`);
+
+      const partidas: Partida[] = response.data;
+
+      return ApiDataMapper.getPartidasToMatchInfo_(partidas);
+    } catch (error) {
+      console.error("Erro ao buscar partidas ao vivo:", error);
+      return [];
+    }
   }
 
   async getTomorrowMatches(): Promise<MatchInfo[]> {
