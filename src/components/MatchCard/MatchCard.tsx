@@ -30,7 +30,7 @@ export function MatchCard(props: MatchCardProps) {
       props.data.status == MatchInfoStatus.IN_PLAY ||
       props.data.status == "andamento"
     ) {
-      setLeftComp(<p>AO VIVO - {props.data.tempo}</p>);
+      setLeftComp(<p className="match-status">AO VIVO</p>);
     } else if (
       props.data.status == MatchInfoStatus.CANCELLED ||
       props.data.status == "cancelado"
@@ -60,23 +60,20 @@ export function MatchCard(props: MatchCardProps) {
       }}
     >
       <header>
-        <img
-          className="profile-image"
-          src={props.data.campeonato.logo_url}
-          alt="logo do campeonato"
-        />
-        <h4>{props.data.campeonato.nome}</h4>
+        <div className="left">
+          <img
+            className="profile-image"
+            src={props.data.campeonato.logo_url}
+            alt="logo do campeonato"
+          />
+          <p>{props.data.campeonato.nome}</p>
+        </div>
+        <p>Rodada {props.data.rodada}</p>
       </header>
 
       <div className="match-info">
-        <div className="left">
-          <h3>Rodada {props.data.rodada}</h3>
-
-          {leftComp}
-        </div>
-
+        <div className="left">{leftComp}</div>
         <div className="linha-em-pe" />
-
         <div className="right">
           <div className="clubs">
             <div className="club">
@@ -107,7 +104,11 @@ export function MatchCard(props: MatchCardProps) {
           </div>
 
           <footer>
-            <Button variant="contained" endIcon={<ArrowForwardIosIcon />}>
+            <Button
+              variant="contained"
+              endIcon={<ArrowForwardIosIcon />}
+              size="small"
+            >
               Detalhes da Partida
             </Button>
           </footer>

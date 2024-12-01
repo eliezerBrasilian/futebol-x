@@ -3,13 +3,20 @@ import { Partida } from "../types/Partida";
 
 export class ApiDataMapper {
   static getPartidasToMatchInfo(
-    partidas: { rodada: string; partida: Partida }[]
+    partidas: { rodada: string; partida: Partida }[],
+    campeonatoId: number,
+    nomeCampeonato: string
   ): MatchInfo[] {
     let matchInfoList: MatchInfo[] = [];
 
     partidas.forEach((partida) => {
       matchInfoList.push(
-        this.getPartidaToMatchInfo(partida.partida, partida.rodada)
+        this.getPartidaToMatchInfo(
+          partida.partida,
+          partida.rodada,
+          campeonatoId,
+          nomeCampeonato
+        )
       );
     });
 
@@ -20,7 +27,14 @@ export class ApiDataMapper {
     let matchInfoList: MatchInfo[] = [];
 
     partidas.forEach((partida) => {
-      matchInfoList.push(this.getPartidaToMatchInfo(partida, undefined));
+      matchInfoList.push(
+        this.getPartidaToMatchInfo(
+          partida,
+          undefined,
+          0,
+          partida.campeonato.nome
+        )
+      );
     });
 
     return matchInfoList;
@@ -28,7 +42,9 @@ export class ApiDataMapper {
 
   static getPartidaToMatchInfo(
     partida: Partida,
-    rodada: string | undefined
+    rodada: string | undefined,
+    campeonatoId: number | undefined,
+    nomeCampeonato: string
   ): MatchInfo {
     let rodadaNumero = "";
 
@@ -37,14 +53,15 @@ export class ApiDataMapper {
       rodadaNumero = rodada?.match(/\d+/)?.[0] ?? "0"; // Captura o número ou retorna "0" como fallback
     }
 
-    console.log(partida);
-
     return {
       id: String(partida?.partida_id),
       campeonato: {
-        nome: partida.campeonato?.nome,
-        logo_url: partida.campeonato?.slug,
-        id: partida.campeonato?.campeonato_id?.toString(),
+        nome: nomeCampeonato,
+        logo_url:
+          campeonatoId == undefined
+            ? this.getCampeonatoLogoUrl(partida.campeonato.campeonato_id)
+            : this.getCampeonatoLogoUrl(campeonatoId),
+        campeonato_id: partida.campeonato?.campeonato_id?.toString(),
       },
       rodada: rodadaNumero?.toString(),
       horario: partida.hora_realizacao,
@@ -67,5 +84,13 @@ export class ApiDataMapper {
       utcDate: partida.data_realizacao_iso,
       estadio: partida.estadio?.nome_popular,
     };
+  }
+
+  static getCampeonatoLogoUrl(campeonatoId: number): string {
+    console.log("----campeo: " + campeonatoId);
+
+    if (campeonatoId == 14 || campeonatoId == 10)
+      return "https://imgs.search.brave.com/iiAchlywX-ZfYaB2iYN2NBsdqYOCgoiTH0Qyq7ewmWQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9sb2dv/c3BuZy5vcmcvZG93/bmxvYWQvYnJhc2ls/ZWlyYW8tc2VyaWUt/YS9sb2dvLWJyYXNp/bGVpcmFvLTIwNDgu/cG5n";
+    else return "";
   }
 }

@@ -76,7 +76,7 @@ export class ApiFootBallDataOrgToMatchMapper {
       campeonato: {
         logo_url: apiData.competition.emblem,
         nome: apiData.competition.name,
-        id: "",
+        campeonato_id: "",
       },
       dia: "",
       emissoras: [],

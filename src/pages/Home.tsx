@@ -22,6 +22,7 @@ export function Home() {
   }, []);
 
   const optionClicked = async (id: string) => {
+    setLoading(true);
     setOptionSelected(Number(id));
     setMatchesList([]);
     if (id == "0") {
@@ -29,10 +30,11 @@ export function Home() {
     } else if (id == "1") {
       setMatchesList(await matchService.getTodayMatches());
     } else if (id == "2") {
-      setMatchesList(await matchService.getTomorrowMatches());
+      setMatchesList(await matchService.getNextMatches());
     } else if (id == "3") {
       setMatchesList(await matchService.getLiveMatches());
     }
+    setLoading(false);
   };
 
   const titleOver = useMemo(() => {

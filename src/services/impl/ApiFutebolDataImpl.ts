@@ -4,15 +4,17 @@ import { MatchService } from "../MatchService";
 import { ApiDataMapper } from "../../data/mapper/ApiDataMapper";
 import { Partida } from "../../data/types/Partida";
 import { RetornoPartidasApi } from "../../data/types/RetornoPartidasApi";
-import { MockData } from "../../data/mock/MockData";
+//import { MockData } from "../../data/mock/MockData";
 
 export class ApiFutebolDataImpl implements MatchService {
-  private mock: MockData = new MockData();
+  //private mock: MockData = new MockData();
   private idBrasileiraoA = 10;
 
   async getNextMatches(): Promise<MatchInfo[]> {
     try {
-      const allMatches = await this.getPartidas();
+      const allMatches = await this.getPartidasDoCampeonato(
+        this.idBrasileiraoA
+      );
 
       // Calcula o dia após amanhã
       const dayAfterTomorrow = new Date();
@@ -38,14 +40,16 @@ export class ApiFutebolDataImpl implements MatchService {
 
       return nextMatches;
     } catch (error) {
-      console.error("Erro ao buscar dados:", error);
+      console.error("Erro ao buscar proximas partidas:", error);
       return [];
     }
   }
 
   async getLastMatches(): Promise<MatchInfo[]> {
     try {
-      const allMatches = await this.getPartidas();
+      const allMatches = await this.getPartidasDoCampeonato(
+        this.idBrasileiraoA
+      );
 
       // Obtém a data de ontem
       const yesterday = new Date();
@@ -74,7 +78,6 @@ export class ApiFutebolDataImpl implements MatchService {
       console.error("Erro ao buscar dados:", error);
       return [];
     }
-    return this.mock.getYesterdayMatches();
   }
 
   async findMatchById(id: string): Promise<MatchInfo | undefined> {
@@ -87,21 +90,31 @@ export class ApiFutebolDataImpl implements MatchService {
       console.log("matche------");
       console.log(partida);
 
-      return ApiDataMapper.getPartidaToMatchInfo(partida, undefined);
+      return ApiDataMapper.getPartidaToMatchInfo(
+        partida,
+        undefined,
+        undefined,
+        partida.campeonato?.nome
+      );
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
       return undefined;
     }
   }
 
-  async getPartidas(): Promise<MatchInfo[]> {
-    const allMatches: { rodada: string; partida: Partida }[] = [];
+  async getPartidasDoCampeonato(campeonatoId: number): Promise<MatchInfo[]> {
+    const allMatches: {
+      rodada: string;
+      partida: Partida;
+    }[] = [];
     try {
       const response = await axios.get(
-        `https://futebol-x-server.onrender.com/futebol/campeonatos/${this.idBrasileiraoA}/partidas/`
+        `https://futebol-x-server.onrender.com/futebol/campeonatos/${campeonatoId}/partidas/`
       );
 
       const partidaJson: RetornoPartidasApi = response.data;
+      const nomeCampeonato = partidaJson.campeonato.nome;
+
       /*
         "partidas": {
           "fase-unica": {
@@ -125,7 +138,11 @@ export class ApiFutebolDataImpl implements MatchService {
       }
 
       // Mapeia os dados para a estrutura de MatchInfo
-      return ApiDataMapper.getPartidasToMatchInfo(allMatches);
+      return ApiDataMapper.getPartidasToMatchInfo(
+        allMatches,
+        campeonatoId,
+        nomeCampeonato
+      );
     } catch (error) {
       console.error(
         `Erro ao buscar partidas do campeonato ${this.idBrasileiraoA}:`,
@@ -137,7 +154,9 @@ export class ApiFutebolDataImpl implements MatchService {
 
   async getTodayMatches(): Promise<MatchInfo[]> {
     try {
-      const allMatches = await this.getPartidas();
+      const allMatches = await this.getPartidasDoCampeonato(
+        this.idBrasileiraoA
+      );
 
       // Obtém a data de hoje no formato dd/mm/yyyy
       const today = new Date();
@@ -164,7 +183,9 @@ export class ApiFutebolDataImpl implements MatchService {
 
   async getYesterdayMatches(): Promise<MatchInfo[]> {
     try {
-      const allMatches = await this.getPartidas();
+      const allMatches = await this.getPartidasDoCampeonato(
+        this.idBrasileiraoA
+      );
 
       // Obtém a data de ontem no formato dd/mm/yyyy
       const yesterday = new Date();
@@ -205,7 +226,9 @@ export class ApiFutebolDataImpl implements MatchService {
 
   async getTomorrowMatches(): Promise<MatchInfo[]> {
     try {
-      const allMatches = await this.getPartidas();
+      const allMatches = await this.getPartidasDoCampeonato(
+        this.idBrasileiraoA
+      );
 
       // Obtém a data de amanhã no formato dd/mm/yyyy
       const tomorrow = new Date();

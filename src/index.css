@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
   min-height: 100vh;
   background-color: #fff;
@@ -13,6 +14,7 @@ body {
   font-family: Montserrat;
   src: url(/static/Montserrat-Regular.ttf);
 }
+
 a {
   text-decoration: none;
 }
@@ -24,6 +26,32 @@ h4,
 h5,
 p {
   font-family: Montserrat;
+}
+
+p {
+  font-size: 14px;
+}
+
+/* Ajuste para dispositivos móveis */
+@media screen and (max-width: 600px) {
+  h1 {
+    font-size: 24px;
+  }
+  h2 {
+    font-size: 20px;
+  }
+  h3 {
+    font-size: 18px;
+  }
+  h4 {
+    font-size: 16px;
+  }
+  h5 {
+    font-size: 14px;
+  }
+  p {
+    font-size: 12px;
+  }
 }
 
 @font-face {

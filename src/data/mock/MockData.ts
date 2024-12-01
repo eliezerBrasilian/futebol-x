@@ -8,7 +8,7 @@ export class MockData {
         nome: "Brasileirao",
         logo_url:
           "https://imgs.search.brave.com/iiAchlywX-ZfYaB2iYN2NBsdqYOCgoiTH0Qyq7ewmWQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9sb2dv/c3BuZy5vcmcvZG93/bmxvYWQvYnJhc2ls/ZWlyYW8tc2VyaWUt/YS9sb2dvLWJyYXNp/bGVpcmFvLTIwNDgu/cG5n",
-        id: "campeonato-1",
+        campeonato_id: "campeonato-1",
       },
       rodada: "2",
       horario: "29/11/2024",
@@ -43,7 +43,7 @@ export class MockData {
           nome: "Brasileirao",
           logo_url:
             "https://imgs.search.brave.com/iiAchlywX-ZfYaB2iYN2NBsdqYOCgoiTH0Qyq7ewmWQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9sb2dv/c3BuZy5vcmcvZG93/bmxvYWQvYnJhc2ls/ZWlyYW8tc2VyaWUt/YS9sb2dvLWJyYXNp/bGVpcmFvLTIwNDgu/cG5n",
-          id: "campeonato-1",
+          campeonato_id: "campeonato-1",
         },
         rodada: "2",
         horario: "29/11/2024",
@@ -79,7 +79,7 @@ export class MockData {
           nome: "Brasileirao",
           logo_url:
             "https://imgs.search.brave.com/iiAchlywX-ZfYaB2iYN2NBsdqYOCgoiTH0Qyq7ewmWQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9sb2dv/c3BuZy5vcmcvZG93/bmxvYWQvYnJhc2ls/ZWlyYW8tc2VyaWUt/YS9sb2dvLWJyYXNp/bGVpcmFvLTIwNDgu/cG5n",
-          id: "campeonato-1",
+          campeonato_id: "campeonato-1",
         },
         rodada: "2",
         horario: "29/11/2024",
@@ -115,7 +115,7 @@ export class MockData {
           nome: "Brasileirao",
           logo_url:
             "https://imgs.search.brave.com/iiAchlywX-ZfYaB2iYN2NBsdqYOCgoiTH0Qyq7ewmWQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9sb2dv/c3BuZy5vcmcvZG93/bmxvYWQvYnJhc2ls/ZWlyYW8tc2VyaWUt/YS9sb2dvLWJyYXNp/bGVpcmFvLTIwNDgu/cG5n",
-          id: "campeonato-1",
+          campeonato_id: "campeonato-1",
         },
         rodada: "2",
         horario: "29/11/2024",
@@ -151,7 +151,7 @@ export class MockData {
           nome: "Brasileirao",
           logo_url:
             "https://imgs.search.brave.com/iiAchlywX-ZfYaB2iYN2NBsdqYOCgoiTH0Qyq7ewmWQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9sb2dv/c3BuZy5vcmcvZG93/bmxvYWQvYnJhc2ls/ZWlyYW8tc2VyaWUt/YS9sb2dvLWJyYXNp/bGVpcmFvLTIwNDgu/cG5n",
-          id: "campeonato-1",
+          campeonato_id: "campeonato-1",
         },
         rodada: "2",
         horario: "29/11/2024",

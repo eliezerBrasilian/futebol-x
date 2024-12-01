@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "../components/ScrollToTop";
 import { Rotas } from "./Rotas";
 import { Home } from "../pages/Home";
-import { Header } from "./Header/Header";
+import Header from "./Header/Header";
 import { MatchDetails } from "../pages/MatchDetails/MatchDetails";
 import { MatchList } from "../pages/MatchList/MatchList";
 

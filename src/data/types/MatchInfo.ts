@@ -33,7 +33,7 @@ export type Emissora = {
 export type Campeonato = {
   logo_url: string;
   nome: string;
-  id: string;
+  campeonato_id: string;
 };
 
 export type Team = {
